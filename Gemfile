@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'puma'
 gem "tmdb", path: "lib/tmdb"
+gem "js-routes"
 
 group :development, :test do
   gem 'byebug'
