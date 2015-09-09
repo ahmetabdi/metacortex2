@@ -34,7 +34,7 @@ class Tmdb::Requester
       begin
         block.call
       rescue RestClient::Exception => e
-        raise Tmdb::Exception::Api.new(e.message)
+        puts Tmdb::Exception::Api.new(e.message)
       end
     end
 
@@ -50,7 +50,7 @@ class Tmdb::Requester
       begin
         JSON.parse(response_body)
       rescue JSON::ParserError => e
-        raise Tmdb::Exception::JsonParseError.new("Response body could not be parsed: #{e.message}")
+        puts Tmdb::Exception::JsonParseError.new("Response body could not be parsed: #{e.message}")
       end
     end
   end

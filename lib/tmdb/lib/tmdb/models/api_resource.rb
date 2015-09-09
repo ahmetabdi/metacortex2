@@ -4,6 +4,7 @@ class Tmdb::ApiResource < OpenStruct
 
   private
   def self.build_single_resource(response, representer)
+    return unless response
     self.new.extend(representer).from_hash(response)
   end
 
