@@ -14,3 +14,18 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$.fn.spectrum=function(arrayOfColors){
+  return this.each(function(){
+    var self=$(this);
+    (function spectrum(){
+      var hue=arrayOfColors.shift()
+      arrayOfColors.push(hue)
+      self.animate({ borderColor: hue }, 1000,spectrum)
+    })();
+  })
+}
+
+$(document).ready(function(){
+  $('.main-search').spectrum(["#8A2BE2", "#4E0096"])
+});
