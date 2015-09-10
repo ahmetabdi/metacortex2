@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def global_search
-    results = Tmdb::Search.multi(params[:query])
+    results = Movie.search(params[:query], fields: [:title])
     render json: results
   end
 end

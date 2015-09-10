@@ -27,8 +27,6 @@ $.fn.spectrum=function(arrayOfColors){
   })
 }
 
-
-
 $(document).ready(function(){
   console.log(Routes.search_path({query: '%QUERY'}))
   $('.main-search').spectrum(["#8A2BE2", "#4E0096"])
@@ -44,21 +42,35 @@ $(document).ready(function(){
     }
   });
 
+  template = Handlebars.compile($("#result-template").html());
+  empty = Handlebars.compile($("#empty-template").html());
+
   $('.main-search').typeahead({
-    hint: true,
+    // hint: true,
+    hint: $('.Typeahead-hint'),
+    menu: $('.Typeahead-menu'),
     highlight: true,
-    minLength: 1
+    minLength: 1,
+    classNames: {
+      open: 'is-open',
+      empty: 'is-empty',
+      cursor: 'is-active',
+      suggestion: 'Typeahead-suggestion',
+      selectable: 'Typeahead-selectable'
+    }
   }, {
     name: 'media-search',
     display: 'title',
     source: mediaSearch,
     templates: {
-      empty: [
-        '<div class="empty-message">',
-        '<p>unable to find any items that match your query</p>',
-        '</div>'
-      ].join('\n')
+      suggestion: template,
+      empty: empty
     }
+  })
+  .on('typeahead:asyncrequest', function() {
+    $('.Typeahead-spinner').show();
+  })
+  .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+    $('.Typeahead-spinner').hide();
   });
-
 });

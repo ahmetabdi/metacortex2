@@ -23,12 +23,16 @@
         </p>
       </div>
 
-      <div class="row">
+<!--       <div class="row">
         <div class="form-group">
-          <input type="text" class="form-control input-lg main-search">
+          <input type="text" class="form-control input-lg ">
         </div>
       </div>
+ -->
 
+      <div id="the-basics">
+        <input class="form-control input-lg typeahead main-search" type="text" placeholder="Search">
+      </div>
       <div class="mastfoot">
         <div class="inner">
           <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -40,3 +44,26 @@
   </div>
 
 </div>
+
+<script id="result-template" type="text/x-handlebars-template">
+  <div class="ProfileCard u-cf">
+    <img class="ProfileCard-avatar" src="https://image.tmdb.org/t/p/w45{{poster_path}}">
+
+    <div class="ProfileCard-details">
+      <div class="ProfileCard-realName">{{title}}</div>
+      <div class="ProfileCard-screenName">{{release_date}}</div>
+      <div class="ProfileCard-description">{{description}}</div>
+    </div>
+
+    <div class="ProfileCard-stats">
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Tweets:</span> {{statuses_count}}</div>
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Following:</span> {{friends_count}}</div>
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Followers:</span> {{followers_count}}</div>
+    </div>
+  </div>
+</script>
+
+<script id="empty-template" type="text/x-handlebars-template">
+  <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
+</script>
+
