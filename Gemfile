@@ -13,6 +13,7 @@ gem 'puma'
 gem "tmdb", path: "lib/tmdb"
 gem "js-routes"
 gem 'searchkick'
+gem 'state_machines-activerecord'
 
 group :development, :test do
   gem 'byebug'

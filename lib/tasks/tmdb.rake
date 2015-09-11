@@ -3,26 +3,49 @@ namespace :tmdb do
   task :dump => :environment do
     last_id = Tmdb::Movie.latest.id
 
-    starting_id = 1#(Movie.last.tmdb_id || 1)
+    starting_id = Movie.last.tmdb_id
 
     (starting_id..last_id).each do |i|
       movie = Tmdb::Movie.find(i)
-      if movie
-        Movie.where(tmdb_id: movie.id).first_or_create do |new_movie|
-          new_movie.tmdb_id = movie.id
-          new_movie.title = movie.title
-          new_movie.backdrop_path = movie.backdrop_path
-          new_movie.overview = movie.overview
-          new_movie.release_date = movie.release_date
-          new_movie.poster_path = movie.poster_path
-          new_movie.imdb_id = movie.imdb_id
-          new_movie.runtime = movie.runtime
-          new_movie.revenue = movie.revenue
-          new_movie.status = movie.status
-          new_movie.tagline = movie.tagline
-        end
-      end
+      add_movie(movie) if movie
+    end
+  end
 
+  desc "Updates popular, upcoming, now playing and top rated movies"
+  task :update => :environment do
+    Movie.with_states(:popular, :now_playing, :upcoming, :top_rated).map(&:generic!)
+
+    Tmdb::Movie.popular.each do |movie|
+      movie = add_movie(movie)
+      movie.popular
+    end
+    Tmdb::Movie.now_playing.each do |movie|
+      movie = add_movie(movie)
+      movie.now_playing
+    end
+    Tmdb::Movie.upcoming.each do |movie|
+      movie = add_movie(movie)
+      movie.upcoming
+    end
+    Tmdb::Movie.top_rated.each do |movie|
+      movie = add_movie(movie)
+      movie.top_rated
+    end
+  end
+
+  def add_movie(movie)
+    Movie.where(tmdb_id: movie.id).first_or_create do |m|
+      m.tmdb_id = movie.id
+      m.title = movie.title
+      m.backdrop_path = movie.backdrop_path
+      m.overview = movie.overview
+      m.release_date = movie.release_date
+      m.poster_path = movie.poster_path
+      m.imdb_id = movie.imdb_id
+      m.runtime = movie.runtime
+      m.revenue = movie.revenue
+      m.status = movie.status
+      m.tagline = movie.tagline
     end
   end
 end

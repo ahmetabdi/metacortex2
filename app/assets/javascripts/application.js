@@ -28,40 +28,44 @@ $.fn.spectrum=function(arrayOfColors){
 }
 
 $(document).ready(function(){
-  console.log(Routes.search_path({query: '%QUERY'}))
-  $('.main-search').spectrum(["#8A2BE2", "#4E0096"])
+  // $('.main-search').spectrum(["#8A2BE2", "#4E0096"])
 
-  var mediaSearch = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-      url: Routes.search_path(),
-      replace: function(url, query) {
-        return url + "?query=" + query;
-      }
-    }
-  });
+  // var mediaSearch = new Bloodhound({
+  //   // datumTokenizer: Bloodhound.tokenizers.whitespace,
+  //   // queryTokenizer: Bloodhound.tokenizers.whitespace,
+  //   // identify: function(obj) { return obj.title; },
+  //   remote: {
+  //     url: Routes.search_path(),
+  //     replace: function(url, query) {
+  //       return url + "?query=" + encodeURIComponent(query);
+  //     }
+  //   }
+  // });
 
   template = Handlebars.compile($("#result-template").html());
   empty = Handlebars.compile($("#empty-template").html());
 
   $('.main-search').typeahead({
+    // hint: $('.Typeahead-hint'),
+    // menu: $('.Typeahead-menu'),
+    // highlight: true,
     // hint: true,
-    hint: $('.Typeahead-hint'),
-    menu: $('.Typeahead-menu'),
-    highlight: true,
-    minLength: 1,
-    classNames: {
-      open: 'is-open',
-      empty: 'is-empty',
-      cursor: 'is-active',
-      suggestion: 'Typeahead-suggestion',
-      selectable: 'Typeahead-selectable'
-    }
+    // minLength: 1,
+    // classNames: {
+    //   open: 'is-open',
+    //   empty: 'is-empty',
+    //   cursor: 'is-active',
+    //   suggestion: 'Typeahead-suggestion',
+    //   selectable: 'Typeahead-selectable'
+    // }
   }, {
     name: 'media-search',
     display: 'title',
-    source: mediaSearch,
+    source: function(query, syncResults, asyncResults) {
+      $.get('/search?query=' + query, function(data) {
+        asyncResults(data);
+      });
+    },
     templates: {
       suggestion: template,
       empty: empty

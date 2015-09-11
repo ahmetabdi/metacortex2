@@ -1,48 +1,32 @@
-<div class="site-wrapper">
-
-  <div class="site-wrapper-inner">
-
-    <div class="cover-container">
-
-      <div class="masthead clearfix">
-        <div class="inner">
-          <h3 class="masthead-brand">Cortex</h3>
-          <nav class="nav nav-masthead">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Contact</a>
-          </nav>
-        </div>
-      </div>
-
-      <div class="inner cover">
-        <h1 class="cover-heading">Cover your page.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-        </p>
-      </div>
-
-<!--       <div class="row">
-        <div class="form-group">
-          <input type="text" class="form-control input-lg ">
-        </div>
-      </div>
- -->
-
-      <div id="the-basics">
-        <input class="form-control input-lg typeahead main-search" type="text" placeholder="Search">
-      </div>
-      <div class="mastfoot">
-        <div class="inner">
-          <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        </div>
-      </div>
-
+<div class="bs-docs-section">
+  <div class="row">
+    <div class="Typeahead">
+      <input class="form-control input-lg typeahead main-search" type="text" placeholder="Search">
+      <%= image_tag('spinner.gif', class: 'Typeahead-spinner') %>
     </div>
-
+    <% cache('dashboard_movies') do %>
+      <div class="col-lg-6">
+        <h2>Popular Movies</h2>
+        <% Movie.with_state(:popular).with_images.each do |movie| %>
+          <%= link_to image_tag(movie.poster), movie_path(movie) %>
+        <% end %>
+        <h2>Now Playing Movies</h2>
+        <% Movie.with_state(:now_playing).with_images.each do |movie| %>
+          <%= link_to image_tag(movie.poster), movie_path(movie) %>
+        <% end %>
+      </div>
+      <div class="col-lg-6">
+        <h2>Upcoming Movies</h2>
+        <% Movie.with_state(:upcoming).with_images.each do |movie| %>
+          <%= link_to image_tag(movie.poster), movie_path(movie) %>
+        <% end %>
+        <h2>Top Rated</h2>
+        <% Movie.with_state(:top_rated).with_images.each do |movie| %>
+          <%= link_to image_tag(movie.poster), movie_path(movie) %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-
 </div>
 
 <script id="result-template" type="text/x-handlebars-template">
@@ -51,14 +35,13 @@
 
     <div class="ProfileCard-details">
       <div class="ProfileCard-realName">{{title}}</div>
-      <div class="ProfileCard-screenName">{{release_date}}</div>
-      <div class="ProfileCard-description">{{description}}</div>
+      <div class="ProfileCard-screenName">({{release_date}})</div>
+      <div class="ProfileCard-description">{{overview}}</div>
     </div>
-
     <div class="ProfileCard-stats">
-      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Tweets:</span> {{statuses_count}}</div>
-      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Following:</span> {{friends_count}}</div>
-      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Followers:</span> {{followers_count}}</div>
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Runtime:</span> {{runtime}}</div>
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Revenue:</span> {{revenue}}</div>
+      <div class="ProfileCard-stat"><span class="ProfileCard-stat-label">Favorites:</span> 0</div>
     </div>
   </div>
 </script>
@@ -66,4 +49,3 @@
 <script id="empty-template" type="text/x-handlebars-template">
   <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
 </script>
-
