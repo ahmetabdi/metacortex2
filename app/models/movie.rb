@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-  searchkick text_start: [:title]
+  searchkick text_middle: [:title]
 
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
 
@@ -38,4 +38,19 @@ class Movie < ActiveRecord::Base
   def imdb_link
     "http://www.imdb.com/title/#{imdb_id}/"
   end
+
+  def release_date_year
+    Date.parse(release_date).year
+  end
+
+  def to_s
+    title
+  end
+
+  def as_json(options={})
+    super(:only    => [:title, :release_date, :overview, :runtime,
+                       :revenue, :poster_path],
+          :methods => [:release_date_year])
+  end
+
 end
