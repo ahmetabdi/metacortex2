@@ -4,7 +4,7 @@ lock '3.4.0'
 set :application, 'metacortex'
 set :repo_url, 'git@github.com:ahmetabdi/metacortex.git'
 set :linked_dirs, %w(
-  bin log vendor/bundle public/system
+  log vendor/bundle public/system
   tmp/pids tmp/cache tmp/sockets
 )
 set :puma_bind, "tcp://0.0.0.0:8080"

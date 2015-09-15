@@ -15,9 +15,12 @@ gem "js-routes"
 gem 'searchkick'
 gem 'state_machines-activerecord'
 gem 'feedjira'
-gem "capistrano-rails", :group => :development
 gem "capistrano3-puma"
 
+group :development do
+  gem 'capistrano-rails-console'
+  gem "capistrano-rails"
+end
 
 group :development, :test do
   gem 'byebug'
