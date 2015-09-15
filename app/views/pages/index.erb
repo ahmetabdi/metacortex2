@@ -26,7 +26,7 @@
         <%# end %>
       </div>
     <%# end %> -->
-    <div class="col-lg-6">
+    <div class="col-lg-12">
       <% Movie.all.with_images.latest.each do |movie| %>
         <%= link_to image_tag(movie.poster), movie_path(movie) if movie.links.any? %>
       <% end %>
