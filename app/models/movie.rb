@@ -2,6 +2,7 @@ class Movie < ActiveRecord::Base
   searchkick text_middle: [:title]
 
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
+  has_many :links
 
   state_machine :state, :initial => :generic do
 

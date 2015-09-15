@@ -65,5 +65,13 @@ $(document).ready(function(){
   })
   .on('typeahead:asynccancel typeahead:asyncreceive', function() {
     $('.Typeahead-spinner').hide();
+  })
+  .on('typeahead:select', function(object, suggestion) { // Call when clicking on a suggestion
+    console.log(object);
+    console.log(suggestion);
+  })
+  .on('typeahead:autocomplete', function(object, suggestion) {
+    console.log(object);
+    console.log(suggestion);
   });
 });

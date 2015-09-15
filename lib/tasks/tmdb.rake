@@ -38,6 +38,12 @@ namespace :tmdb do
     Movie.reindex
   end
 
+  desc "Scans movies from 2ddl"
+  task :twoddl => :environment do
+    adapter = TwoAdapter.new('http://2ddl.tv/category/movies/feed')
+    adapter.scan
+  end
+
   def add_movie(movie)
     Movie.where(tmdb_id: movie.id).first_or_create do |m|
       m.tmdb_id = movie.id
