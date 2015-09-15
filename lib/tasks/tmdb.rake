@@ -46,10 +46,15 @@ namespace :tmdb do
 
   desc "Hi"
   task :test => :environment do
-    #page = "www.alluc.com/embed/id%3Aogikhxe9?alt=Tomorrowland.2015.BDRip.x264-SPARKS.mp4&height=360&width=640"
-    page = "http://vodlocker.com/embed-aijm0f89rng5-640x340.html"
-    doc = Nokogiri::HTML(Typhoeus.get(page).body)
-    puts doc
+    #1ca40c6e8c2ea9b1dad7fd44de022e41
+    Alluc.new("Inside Out 2015 720p HDRip x264 AC3-FUN")
+
+    #page = "www.alluc.com/embed/id%3Aogikhxe9?alt=Tomorrowland.2015.BDRip.x264-SPARKS.mp4"
+    #doc = Nokogiri::HTML(Typhoeus.get(page).body)
+
+    #vid = Nokogiri::HTML(Typhoeus.get(doc.at_css('iframe')['src']).body)
+    #vids = vid.to_s.scan(%r{"([^"]*)"}).flatten
+    #puts vids.select {|link| link.include?("mp4") }
   end
 
   def add_movie(movie)
