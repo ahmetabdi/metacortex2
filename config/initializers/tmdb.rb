@@ -1,1 +1,1 @@
-Tmdb.connect(ENV.fetch('TMDB_API_KEY'))
+Tmdb.connect('8a221fc31fcdf12a8af827465574ffc9')

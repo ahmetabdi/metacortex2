@@ -28,41 +28,30 @@ $.fn.spectrum=function(arrayOfColors){
 }
 
 $(document).ready(function(){
-  // $('.main-search').spectrum(["#8A2BE2", "#4E0096"])
-
-  // var mediaSearch = new Bloodhound({
-  //   // datumTokenizer: Bloodhound.tokenizers.whitespace,
-  //   // queryTokenizer: Bloodhound.tokenizers.whitespace,
-  //   // identify: function(obj) { return obj.title; },
-  //   remote: {
-  //     url: Routes.search_path(),
-  //     replace: function(url, query) {
-  //       return url + "?query=" + encodeURIComponent(query);
-  //     }
-  //   }
-  // });
+  $('.Typeahead').spectrum(["#8A2BE2", "#4E0096"])
 
   template = Handlebars.compile($("#result-template").html());
   empty = Handlebars.compile($("#empty-template").html());
 
   $('.main-search').typeahead({
-    // hint: $('.Typeahead-hint'),
-    // menu: $('.Typeahead-menu'),
-    // highlight: true,
-    // hint: true,
-    // minLength: 1,
-    // classNames: {
-    //   open: 'is-open',
-    //   empty: 'is-empty',
-    //   cursor: 'is-active',
-    //   suggestion: 'Typeahead-suggestion',
-    //   selectable: 'Typeahead-selectable'
-    // }
+    hint: $('.Typeahead-hint'),
+    menu: $('.Typeahead-menu'),
+    highlight: true,
+    hint: true,
+    minLength: 1,
+    classNames: {
+      open: 'is-open',
+      empty: 'is-empty',
+      cursor: 'is-active',
+      suggestion: 'Typeahead-suggestion',
+      selectable: 'Typeahead-selectable'
+    }
   }, {
     name: 'media-search',
     display: 'title',
     source: function(query, syncResults, asyncResults) {
-      $.get('/search?query=' + query, function(data) {
+      console.log(query);
+      $.get('/search?query=' + encodeURIComponent(query), function(data) {
         asyncResults(data);
       });
     },

@@ -14,6 +14,10 @@ gem "tmdb", path: "lib/tmdb"
 gem "js-routes"
 gem 'searchkick'
 gem 'state_machines-activerecord'
+gem 'feedjira'
+gem "capistrano-rails", :group => :development
+gem "capistrano3-puma"
+
 
 group :development, :test do
   gem 'byebug'

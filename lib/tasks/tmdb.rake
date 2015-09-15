@@ -33,6 +33,11 @@ namespace :tmdb do
     end
   end
 
+  desc "Runs the elastic search reindexer for search kick"
+  task :reindex => :environment do
+    Movie.reindex
+  end
+
   def add_movie(movie)
     Movie.where(tmdb_id: movie.id).first_or_create do |m|
       m.tmdb_id = movie.id
