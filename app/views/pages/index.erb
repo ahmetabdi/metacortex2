@@ -4,7 +4,7 @@
       <input class="form-control input-lg typeahead main-search" type="text" placeholder="Search">
       <%= image_tag('spinner.gif', class: 'Typeahead-spinner') %>
     </div>
-    <% cache('dashboard_movies') do %>
+    <% cache('dashboard_movies', :expires_in => 1.hour) do %>
       <div class="col-lg-6">
         <h2>Popular Movies</h2>
         <% Movie.with_state(:popular).with_images.each do |movie| %>
