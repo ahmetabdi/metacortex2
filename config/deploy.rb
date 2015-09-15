@@ -8,7 +8,7 @@ set :linked_dirs, %w(
   tmp/pids tmp/cache tmp/sockets
 )
 set :puma_bind, "tcp://0.0.0.0:8080"
-
+set :pty, true
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
