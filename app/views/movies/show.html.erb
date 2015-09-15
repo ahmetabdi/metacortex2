@@ -1,0 +1,39 @@
+<style>
+  body {
+    background:
+    linear-gradient(
+      rgba(31, 31, 31, 0.85),
+      rgba(31, 31, 31, 0.85)
+    ),
+    url('<%= "https://image.tmdb.org/t/p/original#{@movie.backdrop_path}" %>');
+  }
+</style>
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-3 sidebar">
+      <div>
+        <div class="poster">
+          <%= image_tag("https://image.tmdb.org/t/p/w154#{@movie.poster_path}") if @movie.poster_path %>
+        </div>
+        <p>Revenue: $<%= number_with_delimiter(@movie.revenue, :delimiter => ',') %></p>
+        <p>Status: <%= @movie.status %></p>
+        <p>Runtime: <%= @movie.runtime %></p>
+        <p>Release date: <%= @movie.release_date.to_date.strftime("%d/%m/%Y") if @movie.release_date %></p>
+      </div>
+    </div>
+
+    <div class="col-sm-9 main">
+      <div>
+        <h2><%= @movie.title %> (<%= @movie.release_date_year %>)</h2>
+
+        <h3>Overview</h3>
+        <p><%= @movie.overview %></p>
+
+        <h3>Tagline</h3>
+        <p><%= @movie.tagline %></p>
+
+      </div>
+    </div>
+  </div>
+</div>

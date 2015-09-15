@@ -16,6 +16,7 @@ gem 'searchkick'
 gem 'state_machines-activerecord'
 gem 'feedjira'
 gem "capistrano3-puma"
+gem 'friendly_id'
 
 group :development do
   gem 'capistrano-rails-console'

@@ -45,6 +45,7 @@ namespace :tmdb do
   end
 
   def add_movie(movie)
+    movie = Tmdb::Movie.find(movie.id)
     Movie.where(tmdb_id: movie.id).first_or_create do |m|
       m.tmdb_id = movie.id
       m.title = movie.title

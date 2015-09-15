@@ -1,5 +1,8 @@
 class Movie < ActiveRecord::Base
+  extend FriendlyId
+
   searchkick text_middle: [:title]
+  friendly_id :title, use: :slugged
 
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
   has_many :links

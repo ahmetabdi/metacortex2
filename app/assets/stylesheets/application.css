@@ -18,6 +18,14 @@
 .form-control {
   border: 0.5rem solid #8A2BE2;
 }
+.sidebar {
+  text-align: center;
+}
+.poster img{
+  height: 375px;
+  width: 100%;
+  margin-bottom: 20px;
+}
 
 span.twitter-typeahead {
   width: 100%;
@@ -233,13 +241,8 @@ span.twitter-typeahead {
 
  html,
  body {
-   height: 100%;
-   background-color: #333;
- }
- body {
-   color: #fff;
-   text-align: center;
-   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+  height: 100%;
+  color: #eee;
  }
 
  /* Extra markup and styles for table-esque vertical and horizontal centering */
