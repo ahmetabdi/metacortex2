@@ -5,6 +5,14 @@ module ApplicationHelper
       "2ddl.png"
     when "ul.to"
       "ul_to.png"
+    when "nitroflare.com"
+      "nitroflare.png"
+    when "rapidgator.net"
+      "rapidgator.png"
+    when "go4up.com"
+      "go4up.png"
+    when "zippyshare.com"
+      "zippyshare.png"
     end
   end
 end

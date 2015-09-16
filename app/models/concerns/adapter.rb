@@ -9,7 +9,35 @@ class Adapter
   end
 
   def ul_to(links)
-    links.select {|link| link.include?("ul.to") }
+    links.select {|link| link.include?("ul.to") || link.include?("uploaded.net")}
+  end
+
+  def nitro(links)
+    links.select {|link| link.include?("nitroflare.com")}
+  end
+
+  def rapidgator(links)
+    links.select {|link| link.include?("rapidgator.net")}
+  end
+
+  def zippyshare(links)
+    links.select {|link| link.include?("zippyshare.com")}
+  end
+
+  def go4up(links)
+    links.select {|link| link.include?("go4up.com")}
+  end
+
+  def sh(links)
+    links.select {|link| link.include?("sh.st")}
+  end
+
+  def hugefiles(links)
+    links.select {|link| link.include?("hugefiles.net")}
+  end
+
+  def filefactory(links)
+    links.select {|link| link.include?("filefactory.com")}
   end
 
   # doesn't handle strings with escape quotes \""
