@@ -6,7 +6,10 @@ class TwoAdapter < Adapter
       imdb_id = imdb_id(entry.content)
       movie = grab_tmdb_movie(imdb_id)
 
-      add_movie(movie)
+      # Add movie if it doesn't exist
+      tmdb_movie = add_movie(movie)
+      # Add links if (first) link doesn't exist
+      add_link(ul_to(links), 'ul.to', tmdb_movie)
     end
   end
 

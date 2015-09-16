@@ -21,9 +21,9 @@ class Adapter
     content.match(%r{tt\d{7}})[0]
   end
 
-  def ul_to(content)
-    content.match(%r{http://ul.to\/[a-zA-Z0-9]{8}})
-  end
+  # def ul_to(content)
+  #   content.match(%r{http://ul.to\/[a-zA-Z0-9]{8}})
+  # end
 
   # http://2ddl.tv/category/movies/feed
   # imdb_id = tt3824412
@@ -47,9 +47,12 @@ class Adapter
     end
   end
 
-  def add_link(links, type)
-    Link.where("'test' = ANY (links)").first_or_create do |link|
+  def add_link(links, link_type, movie)
+    # If the first link in the array exists skip adding these links
+    return if Link.where("'#{links.first}' = ANY (links)").present?
 
+    links.each do |link|
+      Link.create!(links: links, link_type: link_type, movie_id: movie.id)
     end
   end
 
