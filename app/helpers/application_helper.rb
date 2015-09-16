@@ -13,6 +13,8 @@ module ApplicationHelper
       "go4up.png"
     when "zippyshare.com"
       "zippyshare.png"
+    when "hugefiles.net"
+      "hugefiles.png"
     end
   end
 end
