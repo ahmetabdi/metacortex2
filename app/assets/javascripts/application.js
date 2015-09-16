@@ -27,7 +27,7 @@ $.fn.spectrum=function(arrayOfColors){
   })
 }
 
-$(document).on('page:change', function(event) {
+$(document).on('ready page:load', function(event) {
   if ($('.Typeahead').length) {
     $('.Typeahead').spectrum(["#8A2BE2", "#4E0096"])
   }
