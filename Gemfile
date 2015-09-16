@@ -19,6 +19,7 @@ gem "capistrano3-puma"
 gem 'friendly_id'
 gem 'typhoeus'
 gem 'nokogiri'
+gem 'whenever'
 
 group :development do
   gem 'capistrano-rails-console'
