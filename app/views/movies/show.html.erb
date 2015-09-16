@@ -40,16 +40,18 @@
             <tr>
               <th>Site</th>
               <th>Uploader</th>
-              <th>Release Name</th>
               <th>Links</th>
             </tr>
           </thead>
           <tbody>
-          <% @movie.links.each do |link| %>
+          <% @movie.links.group_by(&:release_name).each do |title, links| %>
+            <tr>
+              <td colspan='4' style="color: white; font-weight: bold;"><%= title %></td>
+            </tr>
+            <% links.each do |link| %>
             <tr>
               <td><%= image_tag(site_image_to_image(link.site)) %><br><%= link.site %></td>
               <td><%= image_tag(site_image_to_image(link.link_type)) %><br><%= link.link_type %></td>
-              <td><%= link.release_name %></td>
               <td>
                 <ul>
                 <% link.links.each do |link| %>
@@ -58,6 +60,7 @@
                 </ul>
               </td>
             </tr>
+            <% end %>
           <% end %>
           </tbody>
         </table>
