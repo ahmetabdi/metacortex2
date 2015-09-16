@@ -1,7 +1,7 @@
 class Adapter
-  def initialize(feed_url)
-    @feed_url = feed_url
-    @feed = Feedjira::Feed.fetch_and_parse(feed_url)
+  def initialize
+    # @url = url
+    # @feed = Feedjira::Feed.fetch_and_parse(feed_url)
   end
 
   def all_links(content)
@@ -76,10 +76,10 @@ class Adapter
     end
   end
 
-  def add_link(links, link_type, site, movie)
+  def add_link(links, link_type, site, release_name, movie)
     # If the first link in the array exists skip adding these links
     return if links.empty? || Link.where("'#{links.first}' = ANY (links)").present?
-    Link.create!(links: links, link_type: link_type, site: site, movie_id: movie.id)
+    Link.create!(links: links, link_type: link_type, site: site, movie_id: movie.id, release_name: release_name)
   end
 
   def scan_movies
