@@ -24,6 +24,10 @@
         <% Movie.with_state(:top_rated).with_images.each do |movie| %>
           <%= link_to image_tag(movie.poster), movie_path(movie) %>
         <% end %>
+        <h2>Latest links</h2>
+        <% Movie.all.with_images.latest.each do |movie| %>
+          <%= link_to image_tag(movie.poster), movie_path(movie) %>
+        <% end %>
       </div>
     <% end %>
   </div>

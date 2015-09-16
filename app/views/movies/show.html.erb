@@ -33,6 +33,33 @@
         <h3>Tagline</h3>
         <p><%= @movie.tagline %></p>
 
+        <h3>Links</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Site</th>
+              <th>Uploader</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @movie.links.each do |link| %>
+            <tr>
+              <td><%= image_tag(site_image_to_image(link.site)) %><br><%= link.site %></td>
+              <td><%= image_tag(site_image_to_image(link.link_type)) %><br><%= link.link_type %></td>
+              <td>
+                <ul>
+                <% link.links.each do |link| %>
+                  <li><%= link %></li>
+                <% end %>
+                </ul>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>

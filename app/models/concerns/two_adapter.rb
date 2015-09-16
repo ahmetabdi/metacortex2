@@ -9,7 +9,7 @@ class TwoAdapter < Adapter
       # Add movie if it doesn't exist
       tmdb_movie = add_movie(movie)
       # Add links if (first) link doesn't exist
-      add_link(ul_to(links), 'ul.to', tmdb_movie)
+      add_link(ul_to(links), 'ul.to', '2ddl.tv', tmdb_movie)
     end
   end
 

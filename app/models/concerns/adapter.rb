@@ -32,6 +32,7 @@ class Adapter
   end
 
   def add_movie(movie)
+    # movie = Tmdb::Movie.find(movie.id)
     Movie.where(tmdb_id: movie.id).first_or_create do |m|
       m.tmdb_id = movie.id
       m.title = movie.title
@@ -47,13 +48,10 @@ class Adapter
     end
   end
 
-  def add_link(links, link_type, movie)
+  def add_link(links, link_type, site, movie)
     # If the first link in the array exists skip adding these links
-    return if Link.where("'#{links.first}' = ANY (links)").present?
-
-    links.each do |link|
-      Link.create!(links: links, link_type: link_type, movie_id: movie.id)
-    end
+    return if links.empty? || Link.where("'#{links.first}' = ANY (links)").present?
+    Link.create!(links: links, link_type: link_type, site: site, movie_id: movie.id)
   end
 
   def scan_movies

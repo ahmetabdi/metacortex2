@@ -27,51 +27,55 @@ $.fn.spectrum=function(arrayOfColors){
   })
 }
 
-$(document).ready(function(){
-  $('.Typeahead').spectrum(["#8A2BE2", "#4E0096"])
+$(document).on('page:change', function(event) {
+  if ($('.Typeahead').length) {
+    $('.Typeahead').spectrum(["#8A2BE2", "#4E0096"])
+  }
 
-  template = Handlebars.compile($("#result-template").html());
-  empty = Handlebars.compile($("#empty-template").html());
+  if ($('.main-search').length) {
+    template = Handlebars.compile($("#result-template").html());
+    empty = Handlebars.compile($("#empty-template").html());
 
-  $('.main-search').typeahead({
-    hint: $('.Typeahead-hint'),
-    menu: $('.Typeahead-menu'),
-    highlight: true,
-    hint: true,
-    minLength: 1,
-    classNames: {
-      open: 'is-open',
-      empty: 'is-empty',
-      cursor: 'is-active',
-      suggestion: 'Typeahead-suggestion',
-      selectable: 'Typeahead-selectable'
-    }
-  }, {
-    name: 'media-search',
-    display: 'title',
-    source: function(query, syncResults, asyncResults) {
-      console.log(query);
-      $.get('/search?query=' + encodeURIComponent(query), function(data) {
-        asyncResults(data);
-      });
-    },
-    templates: {
-      suggestion: template,
-      empty: empty
-    }
-  })
-  .on('typeahead:asyncrequest', function() {
-    $('.Typeahead-spinner').show();
-  })
-  .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-    $('.Typeahead-spinner').hide();
-  })
-  .on('typeahead:select', function(object, suggestion) { // Call when clicking on a suggestion
-    console.log(object);
-    console.log(suggestion);
-  })
-  .on('typeahead:autocomplete', function(object, suggestion) {
-    console.log(object);
-    console.log(suggestion);
-  });
+    $('.main-search').typeahead({
+      hint: $('.Typeahead-hint'),
+      menu: $('.Typeahead-menu'),
+      highlight: true,
+      hint: true,
+      minLength: 1,
+      classNames: {
+        open: 'is-open',
+        empty: 'is-empty',
+        cursor: 'is-active',
+        suggestion: 'Typeahead-suggestion',
+        selectable: 'Typeahead-selectable'
+      }
+    }, {
+      name: 'media-search',
+      display: 'title',
+      source: function(query, syncResults, asyncResults) {
+        console.log(query);
+        $.get('/search?query=' + encodeURIComponent(query), function(data) {
+          asyncResults(data);
+        });
+      },
+      templates: {
+        suggestion: template,
+        empty: empty
+      }
+    })
+    .on('typeahead:asyncrequest', function() {
+      $('.Typeahead-spinner').show();
+    })
+    .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+      $('.Typeahead-spinner').hide();
+    })
+    .on('typeahead:select', function(object, suggestion) { // Call when clicking on a suggestion
+      console.log(object);
+      console.log(suggestion);
+    })
+    .on('typeahead:autocomplete', function(object, suggestion) {
+      console.log(object);
+      console.log(suggestion);
+    });
+  }
 });
