@@ -40,7 +40,7 @@ namespace :tmdb do
 
   desc "Scans movies from 2ddl"
   task :twoddl => :environment do
-    adapter = TwoAdapter.new('http://2ddl.tv/category/movies/feed')
+    adapter = TwoAdapter.new
     adapter.scan
   end
 

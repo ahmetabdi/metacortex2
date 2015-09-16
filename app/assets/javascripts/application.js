@@ -70,12 +70,10 @@ $(document).on('ready page:load', function(event) {
       $('.Typeahead-spinner').hide();
     })
     .on('typeahead:select', function(object, suggestion) { // Call when clicking on a suggestion
-      console.log(object);
-      console.log(suggestion);
+      window.location.href = "/movies/" + suggestion.slug;
     })
     .on('typeahead:autocomplete', function(object, suggestion) {
-      console.log(object);
-      console.log(suggestion);
+      window.location.href = "/movies/" + suggestion.slug;
     });
   }
 });

@@ -57,7 +57,7 @@ class Movie < ActiveRecord::Base
 
   def as_json(options={})
     super(:only    => [:title, :release_date, :overview, :runtime,
-                       :revenue, :poster_path],
+                       :revenue, :poster_path, :slug],
           :methods => [:release_date_year])
   end
 
