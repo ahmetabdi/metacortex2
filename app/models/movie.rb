@@ -5,7 +5,6 @@ class Movie < ActiveRecord::Base
   friendly_id :title, use: :slugged
 
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
-  scope :with_links, -> { includes(:links).where.not(links: { links: [] }) }
   scope :latest, -> { order('created_at') }
   has_many :links
 
@@ -30,7 +29,10 @@ class Movie < ActiveRecord::Base
     event :generic do
       transition any => :generic
     end
+  end
 
+  def self.with_links
+    links.any?
   end
 
   def poster(size = 'w92')
