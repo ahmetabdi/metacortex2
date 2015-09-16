@@ -25,7 +25,7 @@
           <%= link_to image_tag(movie.poster), movie_path(movie) %>
         <% end %>
         <h2>Latest links</h2>
-        <% Movie.all.with_images.latest.each do |movie| %>
+        <% Movie.all.with_images.with_links.latest.each do |movie| %>
           <%= link_to image_tag(movie.poster), movie_path(movie) %>
         <% end %>
       </div>
