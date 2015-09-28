@@ -44,6 +44,14 @@ namespace :tmdb do
     adapter.scan
   end
 
+  desc "Hi"
+  task :test => :environment do
+    #page = "www.alluc.com/embed/id%3Aogikhxe9?alt=Tomorrowland.2015.BDRip.x264-SPARKS.mp4&height=360&width=640"
+    page = "http://vodlocker.com/embed-aijm0f89rng5-640x340.html"
+    doc = Nokogiri::HTML(Typhoeus.get(page).body)
+    puts doc
+  end
+
   def add_movie(movie)
     movie = Tmdb::Movie.find(movie.id)
     Movie.where(tmdb_id: movie.id).first_or_create do |m|
