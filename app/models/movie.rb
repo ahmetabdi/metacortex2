@@ -5,7 +5,7 @@ class Movie < ActiveRecord::Base
   friendly_id :title, use: :slugged
 
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
-  scope :latest, -> { order('created_at DESC') }
+  scope :latest, -> { order('updated_at DESC') }
   has_many :links
 
   state_machine :state, :initial => :generic do
