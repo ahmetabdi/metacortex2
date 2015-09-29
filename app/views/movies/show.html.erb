@@ -38,29 +38,29 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Site</th>
-              <th>Uploader</th>
-              <th>Links</th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-          <% @movie.links.group_by(&:release_name).each do |title, links| %>
+          <% @movie.movie_releases.each do |release| %>
+            <% a = Alluc.new(release.name) %>
+            <% links = a.fetch %>
             <tr>
-              <td colspan='4' style="color: white; font-weight: bold;"><%= title %></td>
+              <td colspan="3"><%= release.name %></td>
             </tr>
-            <% links.each do |link| %>
             <tr>
-              <td><%= image_tag(site_image_to_image(link.site)) %><br><%= link.site %></td>
-              <td><%= image_tag(site_image_to_image(link.link_type)) %><br><%= link.link_type %></td>
-              <td>
-                <ul>
-                <% link.links.each do |link| %>
-                  <li><%= link %></li>
+              <td colspan="3">
+                <% if links.any? %>
+                  <% links.each do |link| %>
+                    <li><%= link %></li>
+                  <% end %>
+                <% else %>
+                  <p>No links currently available</p>
                 <% end %>
-                </ul>
               </td>
             </tr>
-            <% end %>
           <% end %>
           </tbody>
         </table>

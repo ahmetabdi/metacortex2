@@ -46,7 +46,8 @@ class Adapter
   # this.scan(%r{href=".+?(?=")})
   # grab all href urls
   def imdb_id(content)
-    content.match(%r{tt\d{7}})[0]
+    match = content.match(%r{tt\d{7}})
+    match[0] unless match.nil?
   end
 
   # def ul_to(content)

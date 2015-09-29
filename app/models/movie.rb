@@ -7,6 +7,7 @@ class Movie < ActiveRecord::Base
   scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
   scope :latest, -> { order('updated_at DESC') }
   has_many :links
+  has_many :movie_releases
 
   state_machine :state, :initial => :generic do
 

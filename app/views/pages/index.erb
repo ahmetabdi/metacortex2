@@ -38,7 +38,7 @@ var playerInstance = jwplayer('myElement');
     <%# end %> -->
     <div class="col-lg-12">
       <% Movie.all.with_images.latest.each do |movie| %>
-        <%= link_to image_tag(movie.poster), movie_path(movie) if movie.links.any? %>
+        <%= link_to image_tag(movie.poster), movie_path(movie) %>
       <% end %>
     </div>
   </div>

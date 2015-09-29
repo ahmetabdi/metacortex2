@@ -20,19 +20,27 @@ class TwoAdapter < Adapter
 
         links = all_links(content)
         imdb_id = imdb_id(content)
-        movie = grab_tmdb_movie(imdb_id)
 
-        # Add movie if it doesn't exist
-        tmdb_movie = add_movie(movie)
-        # Add links if (first) link doesn't exist
-        add_link(ul_to(links), 'ul.to', SITE_NAME, release_name, tmdb_movie)
-        add_link(nitro(links), 'nitroflare.com', SITE_NAME, release_name, tmdb_movie)
-        add_link(rapidgator(links), 'rapidgator.net', SITE_NAME, release_name, tmdb_movie)
-        add_link(zippyshare(links), 'zippyshare.com', SITE_NAME, release_name, tmdb_movie)
-        add_link(go4up(links), 'go4up.com', SITE_NAME, release_name, tmdb_movie)
-        add_link(sh(links), 'sh.st', SITE_NAME, release_name, tmdb_movie)
-        add_link(hugefiles(links), 'hugefiles.net', SITE_NAME, release_name, tmdb_movie)
-        add_link(filefactory(links), 'filefactory.com', SITE_NAME, release_name, tmdb_movie)
+        if imdb_id
+          movie = grab_tmdb_movie(imdb_id)
+
+          if movie
+            # Add movie if it doesn't exist
+            tmdb_movie = add_movie(movie)
+            # Add links if (first) link doesn't exist
+
+            MovieRelease.create!(name: release_name, movie_id: tmdb_movie.id)
+          end
+        end
+
+        # add_link(ul_to(links), 'ul.to', SITE_NAME, release_name, tmdb_movie)
+        # add_link(nitro(links), 'nitroflare.com', SITE_NAME, release_name, tmdb_movie)
+        # add_link(rapidgator(links), 'rapidgator.net', SITE_NAME, release_name, tmdb_movie)
+        # add_link(zippyshare(links), 'zippyshare.com', SITE_NAME, release_name, tmdb_movie)
+        # add_link(go4up(links), 'go4up.com', SITE_NAME, release_name, tmdb_movie)
+        # add_link(sh(links), 'sh.st', SITE_NAME, release_name, tmdb_movie)
+        # add_link(hugefiles(links), 'hugefiles.net', SITE_NAME, release_name, tmdb_movie)
+        # add_link(filefactory(links), 'filefactory.com', SITE_NAME, release_name, tmdb_movie)
       end
     end
     # @feed.entries.each do |entry|
