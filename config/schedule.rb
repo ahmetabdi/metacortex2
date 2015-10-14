@@ -1,3 +1,3 @@
 every 2.hours do
-  rake "tmdb:twoddl"
+  rake "movienight:fetch"
 end

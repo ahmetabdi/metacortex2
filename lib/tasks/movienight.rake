@@ -6,8 +6,6 @@ require 'time'
 namespace :movienight do
   desc 'Downloads all URLs from the frontpage of movienight'
   task fetch: :environment do
-    Movie.destroy_all
-    Link.destroy_all
     puts Benchmark.measure {
       pages = []
       links = []
