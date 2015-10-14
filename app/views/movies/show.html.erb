@@ -5,7 +5,7 @@
       rgba(31, 31, 31, 0.85),
       rgba(31, 31, 31, 0.85)
     ),
-    url('<%= "https://image.tmdb.org/t/p/original#{@movie.backdrop_path}" %>');
+    url('<%#= "https://image.tmdb.org/t/p/original#{@movie.backdrop_path}" %>');
   }
 </style>
 <div class="container">
@@ -14,56 +14,30 @@
     <div class="col-sm-3 sidebar">
       <div>
         <div class="poster">
-          <%= image_tag("https://image.tmdb.org/t/p/w154#{@movie.poster_path}") if @movie.poster_path %>
+          <%= image_tag(@movie.poster) if @movie.poster %>
         </div>
-        <p>Revenue: $<%= number_with_delimiter(@movie.revenue, :delimiter => ',') %></p>
-        <p>Status: <%= @movie.status %></p>
-        <p>Runtime: <%= @movie.runtime %></p>
+        <p>Genres: <%= @movie.genres %></p>
+        <p>Runtime: <%= @movie.runtime %> minutes</p>
         <p>Release date: <%= @movie.release_date.to_date.strftime("%d/%m/%Y") if @movie.release_date %></p>
       </div>
     </div>
 
     <div class="col-sm-9 main">
       <div>
-        <h2><%= @movie.title %> (<%= @movie.release_date_year %>)</h2>
+        <h2><%= @movie.title %> (<%= @movie.year %>)</h2>
 
-        <h3>Overview</h3>
-        <p><%= @movie.overview %></p>
+        <h3>Plot</h3>
+        <p><%= @movie.plot %></p>
 
-        <h3>Tagline</h3>
-        <p><%= @movie.tagline %></p>
+        <p>Imdb Rating</p>
+        <p><%= @movie.imdb_rating %></p>
 
-        <h3>Links</h3>
+        <p>Imdb Votes</p>
+        <p><%= @movie.imdb_votes %></p>
 
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-          <% @movie.movie_releases.each do |release| %>
-            <% a = Alluc.new(release.name) %>
-            <% links = a.fetch %>
-            <tr>
-              <td colspan="3"><%= release.name %></td>
-            </tr>
-            <tr>
-              <td colspan="3">
-                <% if links.any? %>
-                  <% links.each do |link| %>
-                    <li><%= link %></li>
-                  <% end %>
-                <% else %>
-                  <p>No links currently available</p>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+        <% @movie.links.each do |link| %>
+          <iframe src="<%= link.link %>" frameborder="0" width="720" height="405" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <% end %>
 
       </div>
     </div>

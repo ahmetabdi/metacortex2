@@ -10,20 +10,21 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'puma'
-gem "tmdb", path: "lib/tmdb"
-gem "js-routes"
+gem 'tmdb', path: 'lib/tmdb'
+gem 'js-routes'
 gem 'searchkick'
 gem 'state_machines-activerecord'
 gem 'feedjira'
-gem "capistrano3-puma"
+gem 'capistrano3-puma'
 gem 'friendly_id'
 gem 'typhoeus'
 gem 'nokogiri'
 gem 'whenever'
+gem 'faraday'
 
 group :development do
   gem 'capistrano-rails-console'
-  gem "capistrano-rails"
+  gem 'capistrano-rails'
 end
 
 group :development, :test do

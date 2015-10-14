@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150929072328) do
+ActiveRecord::Schema.define(version: 20150915201823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,44 +30,41 @@ ActiveRecord::Schema.define(version: 20150929072328) do
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "links", force: :cascade do |t|
-    t.string   "link_type",                 null: false
-    t.text     "links",        default: [],              array: true
-    t.integer  "movie_id",                  null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "link"
     t.string   "site"
-    t.string   "release_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "movie_id",   null: false
   end
 
   add_index "links", ["movie_id"], name: "index_links_on_movie_id", using: :btree
 
-  create_table "movie_releases", force: :cascade do |t|
-    t.string  "name",     null: false
-    t.integer "movie_id", null: false
-  end
-
-  add_index "movie_releases", ["movie_id"], name: "index_movie_releases_on_movie_id", using: :btree
-
   create_table "movies", force: :cascade do |t|
-    t.integer  "tmdb_id"
     t.string   "title"
-    t.string   "backdrop_path"
-    t.text     "overview"
-    t.string   "release_date"
-    t.string   "poster_path"
+    t.string   "year"
+    t.string   "rated"
+    t.datetime "release_date"
+    t.string   "runtime"
+    t.string   "genres"
+    t.string   "director"
+    t.string   "writer"
+    t.string   "actors"
+    t.string   "plot"
+    t.string   "language"
+    t.string   "country"
+    t.string   "awards"
+    t.string   "poster"
+    t.string   "metascore"
+    t.string   "imdb_rating"
+    t.string   "imdb_votes"
     t.string   "imdb_id"
-    t.integer  "runtime"
-    t.integer  "revenue"
-    t.string   "status"
-    t.text     "tagline"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.string   "state",         default: "generic"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "state",        default: "generic"
     t.string   "slug"
   end
 
   add_index "movies", ["slug"], name: "index_movies_on_slug", unique: true, using: :btree
 
   add_foreign_key "links", "movies"
-  add_foreign_key "movie_releases", "movies"
 end

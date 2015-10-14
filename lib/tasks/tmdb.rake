@@ -1,6 +1,6 @@
 namespace :tmdb do
-  desc "Dumps TMDB Database (Long running task..)"
-  task :dump => :environment do
+  desc 'Dumps TMDB Database (Long running task..)'
+  task dump: :environment do
     last_id = Tmdb::Movie.latest.id
 
     starting_id = Movie.last.tmdb_id
@@ -11,8 +11,8 @@ namespace :tmdb do
     end
   end
 
-  desc "Updates popular, upcoming, now playing and top rated movies"
-  task :update => :environment do
+  desc 'Updates popular, upcoming, now playing and top rated movies'
+  task update: :environment do
     Movie.with_states(:popular, :now_playing, :upcoming, :top_rated).map(&:generic!)
 
     Tmdb::Movie.popular.each do |movie|
@@ -33,29 +33,29 @@ namespace :tmdb do
     end
   end
 
-  desc "Runs the elastic search reindexer for search kick"
-  task :reindex => :environment do
+  desc 'Runs the elastic search reindexer for search kick'
+  task reindex: :environment do
     Movie.reindex
   end
 
-  desc "Scans movies from 2ddl"
-  task :twoddl => :environment do
-    adapter = TwoAdapter.new
-    adapter.scan
-  end
+  # desc "Scans movies from 2ddl"
+  # task :twoddl => :environment do
+  #   adapter = TwoAdapter.new
+  #   adapter.scan
+  # end
 
-  desc "Hi"
-  task :test => :environment do
-    #1ca40c6e8c2ea9b1dad7fd44de022e41
-    Alluc.new("Inside Out 2015 720p HDRip x264 AC3-FUN")
-
-    #page = "www.alluc.com/embed/id%3Aogikhxe9?alt=Tomorrowland.2015.BDRip.x264-SPARKS.mp4"
-    #doc = Nokogiri::HTML(Typhoeus.get(page).body)
-
-    #vid = Nokogiri::HTML(Typhoeus.get(doc.at_css('iframe')['src']).body)
-    #vids = vid.to_s.scan(%r{"([^"]*)"}).flatten
-    #puts vids.select {|link| link.include?("mp4") }
-  end
+  # desc "Hi"
+  # task :test => :environment do
+  #   #1ca40c6e8c2ea9b1dad7fd44de022e41
+  #   Alluc.new("Inside Out 2015 720p HDRip x264 AC3-FUN")
+  #
+  #   #page = "www.alluc.com/embed/id%3Aogikhxe9?alt=Tomorrowland.2015.BDRip.x264-SPARKS.mp4"
+  #   #doc = Nokogiri::HTML(Typhoeus.get(page).body)
+  #
+  #   #vid = Nokogiri::HTML(Typhoeus.get(doc.at_css('iframe')['src']).body)
+  #   #vids = vid.to_s.scan(%r{"([^"]*)"}).flatten
+  #   #puts vids.select {|link| link.include?("mp4") }
+  # end
 
   def add_movie(movie)
     movie = Tmdb::Movie.find(movie.id)
