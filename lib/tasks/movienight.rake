@@ -15,6 +15,7 @@ namespace :movienight do
         faraday.adapter :typhoeus
       end
 
+      puts 'Fetch pages'
       conn.in_parallel do
         pages << conn.get('/')
         pages << conn.get('/page/2/')
@@ -29,6 +30,7 @@ namespace :movienight do
         links.flatten!
       end
 
+      puts "Fetching #{links.count} links"
       conn.in_parallel do
         links.each do |link|
           posts << conn.get(link)
@@ -38,39 +40,30 @@ namespace :movienight do
       posts.each do |post|
         article = Nokogiri::HTML(post.body)
         link = article.at_css('iframe')
-        next if link.nil?
+        next if link.nil? # Return if it doesn't have an iframe link
         name = article.at_css('h1').text.gsub(/\(\d{4}\)/, '').strip
         video_link = link['src']
 
-        url = URI('http://www.omdbapi.com/')
-        url.query = URI.encode_www_form(t: name, plot: 'full', r: 'json')
+        movie = Tmdb::Movie.find(Tmdb::Search.multi(name).first.id)
+        next if movie.nil? # skip if cannot find a tmdb movie
+        new_movie = Movie.where(imdb_id: movie.imdb_id).first_or_create do |m|
+          m.tmdb_id = movie.id
+          m.title = movie.title
+          m.backdrop_path = movie.backdrop_path
+          m.overview = movie.overview
+          m.release_date = movie.release_date
+          m.poster_path = movie.poster_path
+          m.imdb_id = movie.imdb_id
+          m.runtime = movie.runtime
+          m.revenue = movie.revenue
+          m.status = movie.status
+          m.tagline = movie.tagline
+        end
 
-        json = JSON.parse(Typhoeus.get(url.to_s).body)
-
-        if json['Response'] == 'True'
-          movie = Tmdb::Movie.find(json['imdbID'])
-          next if movie.nil?
-          new_movie = Movie.where(imdb_id: movie.imdb_id).first_or_create do |m|
-            m.tmdb_id = movie.id
-            m.title = movie.title
-            m.backdrop_path = movie.backdrop_path
-            m.overview = movie.overview
-            m.release_date = movie.release_date
-            m.poster_path = movie.poster_path
-            m.imdb_id = movie.imdb_id
-            m.runtime = movie.runtime
-            m.revenue = movie.revenue
-            m.status = movie.status
-            m.tagline = movie.tagline
-          end
-
-          Link.where(movie_id: new_movie.id, link: video_link).first_or_create do |l|
-            l.link = video_link
-            l.site = URI(video_link).host
-            l.movie_id = new_movie.id
-          end
-        else
-          puts "Failed to get response for: #{name}"
+        Link.where(movie_id: new_movie.id, link: video_link).first_or_create do |l|
+          l.link = video_link
+          l.site = URI(video_link).host
+          l.movie_id = new_movie.id
         end
       end
     }
