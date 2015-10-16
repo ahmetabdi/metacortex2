@@ -4,7 +4,7 @@ class Movie < ActiveRecord::Base
   searchkick text_middle: [:title]
   friendly_id :title, use: :slugged
 
-  scope :with_images, -> { where.not(poster: nil, poster: 'N/A') }
+  scope :with_images, -> { where.not(poster_path: nil, backdrop_path: nil) }
   scope :latest, -> { order('updated_at ASC') }
   has_many :links
 
@@ -35,29 +35,30 @@ class Movie < ActiveRecord::Base
     links.any?
   end
 
-  # def poster(size = 'w92')
-  #   "http://image.tmdb.org/t/p/#{size}#{poster_path}"
-  # end
-  #
-  # def backdrop(size)
-  #   "http://image.tmdb.org/t/p/#{size}#{backdrop_path}"
-  # end
-  #
-  # def imdb_link
-  #   "http://www.imdb.com/title/#{imdb_id}/"
-  # end
-  #
-  # def release_date_year
-  #   Date.parse(release_date).year
-  # end
+  def poster(size = 'w92')
+    "http://image.tmdb.org/t/p/#{size}#{poster_path}"
+  end
+
+  def backdrop(size)
+    "http://image.tmdb.org/t/p/#{size}#{backdrop_path}"
+  end
+
+  def imdb_link
+    "http://www.imdb.com/title/#{imdb_id}/"
+  end
+
+  def release_date_year
+    Date.parse(release_date).year
+  end
 
   def to_s
     title
   end
 
   def as_json(options = {})
-    super(only: [:title, :release_date, :plot, :runtime,
-                 :year, :poster, :slug])
+    super(only: [:title, :release_date, :overview, :runtime,
+                 :revenue, :poster_path, :slug],
+          methods: [:release_date_year])
   end
 
 end

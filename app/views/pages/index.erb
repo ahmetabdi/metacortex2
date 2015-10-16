@@ -28,7 +28,7 @@
     <%# end %> -->
     <div class="col-lg-12">
       <% Movie.all.with_images.latest.each do |movie| %>
-        <%= link_to image_tag(movie.poster, width: 100), movie_path(movie) %>
+        <%= link_to image_tag(movie.poster), movie_path(movie) %>
       <% end %>
     </div>
   </div>

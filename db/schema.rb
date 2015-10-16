@@ -40,27 +40,20 @@ ActiveRecord::Schema.define(version: 20150915201823) do
   add_index "links", ["movie_id"], name: "index_links_on_movie_id", using: :btree
 
   create_table "movies", force: :cascade do |t|
+    t.integer  "tmdb_id"
     t.string   "title"
-    t.string   "year"
-    t.string   "rated"
-    t.datetime "release_date"
-    t.string   "runtime"
-    t.string   "genres"
-    t.string   "director"
-    t.string   "writer"
-    t.string   "actors"
-    t.string   "plot"
-    t.string   "language"
-    t.string   "country"
-    t.string   "awards"
-    t.string   "poster"
-    t.string   "metascore"
-    t.string   "imdb_rating"
-    t.string   "imdb_votes"
+    t.string   "backdrop_path"
+    t.text     "overview"
+    t.string   "release_date"
+    t.string   "poster_path"
     t.string   "imdb_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "state",        default: "generic"
+    t.integer  "runtime"
+    t.integer  "revenue"
+    t.string   "status"
+    t.text     "tagline"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "state",         default: "generic"
     t.string   "slug"
   end
 

@@ -41,7 +41,7 @@ $(document).on('ready page:load', function(event) {
       menu: $('.Typeahead-menu'),
       highlight: true,
       hint: true,
-      minLength: 1,
+      minLength: 0,
       classNames: {
         open: 'is-open',
         empty: 'is-empty',

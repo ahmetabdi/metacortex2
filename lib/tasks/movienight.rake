@@ -48,30 +48,26 @@ namespace :movienight do
         json = JSON.parse(Typhoeus.get(url.to_s).body)
 
         if json['Response'] == 'True'
-          movie = Movie.where(imdb_id: json['imdbID']).first_or_create do |m|
-            m.title = json['Title']
-            m.year = json['Year']
-            m.rated = json['Rated']
-            m.release_date = Time.parse(json['Released']) unless json['Released'] == 'N/A' || json['Released'] == nil
-            m.runtime = json['Runtime'].gsub('min', '').strip unless json['Runtime'] == 'N/A' || json['Runtime'] == nil
-            m.genres = json['Genre']
-            m.director = json['Director']
-            m.writer = json['Writer']
-            m.actors = json['Actors']
-            m.plot = json['Plot']
-            m.language = json['Language']
-            m.country = json['Country']
-            m.awards = json['Awards']
-            m.poster = json['Poster']
-            m.metascore = json['Metascore']
-            m.imdb_rating = json['imdbRating']
-            m.imdb_votes = json['imdbVotes']
-            m.imdb_id = json['imdbID']
+          movie = Tmdb::Movie.find(json['imdbID'])
+          next if movie.nil?
+          new_movie = Movie.where(imdb_id: movie.imdb_id).first_or_create do |m|
+            m.tmdb_id = movie.id
+            m.title = movie.title
+            m.backdrop_path = movie.backdrop_path
+            m.overview = movie.overview
+            m.release_date = movie.release_date
+            m.poster_path = movie.poster_path
+            m.imdb_id = movie.imdb_id
+            m.runtime = movie.runtime
+            m.revenue = movie.revenue
+            m.status = movie.status
+            m.tagline = movie.tagline
           end
-          Link.where(movie_id: movie.id, link: video_link).first_or_create do |l|
+
+          Link.where(movie_id: new_movie.id, link: video_link).first_or_create do |l|
             l.link = video_link
             l.site = URI(video_link).host
-            l.movie_id = movie.id
+            l.movie_id = new_movie.id
           end
         else
           puts "Failed to get response for: #{name}"

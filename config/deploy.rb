@@ -2,6 +2,8 @@
 lock '3.4.0'
 
 set :application, 'metacortex'
+set :scm, :git
+set :deploy_via, :remote_cache
 set :repo_url, 'git@github.com:ahmetabdi/metacortex.git'
 set :linked_dirs, %w(
   log vendor/bundle public/system
