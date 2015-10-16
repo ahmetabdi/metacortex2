@@ -17,4 +17,12 @@ module ApplicationHelper
       "hugefiles.png"
     end
   end
+
+  def page_meta_title
+    if content_for(:meta_title)
+      content_for(:meta_title) + " - NinjaPig - Direct Stream Full HD Movies for FREE!"
+    else
+      "NinjaPig - Direct Stream Full HD Movies for FREE!"
+    end
+  end
 end
